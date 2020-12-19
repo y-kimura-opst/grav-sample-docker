@@ -7,7 +7,7 @@ grav/logs/
 grav/data/
 grav/data/notifications/
 grav/data/feed/
-grav/user/accounts/
+#grav/user/accounts/
 grav/user/plugins/admin/
 grav/user/plugins/email/
 grav/user/plugins/form/
