@@ -64,7 +64,7 @@ jobs:
           docker build . -f Dockerfile.admin --tag "${IMAGE_IDENTITY}"
       - name: Test the Docker image
         run: |
-          docker run --name test -d -p 9000:8080 "${IMAGE_IDENTITY}"
+          docker run --name test -d -p 9000:8080 -v $PWD/grav/user:/var/www/grav/_user "${IMAGE_IDENTITY}"
           sleep 3
           curl -LsS --retry 10 \
             --retry-delay 3 \
