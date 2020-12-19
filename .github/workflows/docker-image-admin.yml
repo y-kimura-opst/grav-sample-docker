@@ -14,6 +14,7 @@ on:
     - 'Dockerfile.admin'
     - '.hadolint'
     - '.github/workflows/**'
+  workflow_dispatch:
   workflow_run:
     workflows:
       - Docker Base Image CI

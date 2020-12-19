@@ -18,6 +18,7 @@ on:
     - '.github/workflows/**'
   schedule:
     - cron:  '0 12 * * *'
+  workflow_dispatch:
 
 env:
   GITHUB_PKG_REPO: "docker.pkg.github.com"
