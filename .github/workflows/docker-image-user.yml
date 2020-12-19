@@ -62,7 +62,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}:main-base
+          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}/base:main
           docker build . --tag "${IMAGE_IDENTITY}"
 
       - name: Test the Docker image
