@@ -13,6 +13,7 @@ on:
     - 'grav/user/**'
     - 'Dockerfile'
     - '.hadolint'
+    - '.github/workflows/**'
   workflow_run:
     workflows:
       - Docker Base Image CI
@@ -21,7 +22,7 @@ on:
 
 env:
   GITHUB_PKG_REPO: "docker.pkg.github.com"
-  IMAGE_NAME: "${{ github.repository }}/grav"
+  IMAGE_NAME: "${{ github.repository }}"
   DOCKER_BUILDKIT: "1"
 
 jobs:
@@ -40,7 +41,7 @@ jobs:
             echo "PR以外の時はベースブランチ名がタグ名になります。"
             TAG_NAME=${GITHUB_REF##*/}
           fi
-          echo IMAGE_IDENTITY="${GITHUB_PKG_REPO}/${IMAGE_NAME}:${TAG_NAME}" >> $GITHUB_ENV
+          echo IMAGE_IDENTITY="${GITHUB_PKG_REPO}/${IMAGE_NAME}/grav:${TAG_NAME}" >> $GITHUB_ENV
 
       - name: Get Environment
         run: |
@@ -61,7 +62,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}:main-base
+          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}/base:main
           docker build . --tag "${IMAGE_IDENTITY}"
 
       - name: Test the Docker image
