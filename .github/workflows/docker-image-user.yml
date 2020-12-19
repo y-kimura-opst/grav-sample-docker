@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker User Image CI
 
 on:
   push:
@@ -13,8 +13,11 @@ on:
     - 'grav/user/**'
     - 'Dockerfile'
     - '.hadolint'
-  schedule:
-    - cron:  '0 13 * * *'
+  workflow_run:
+    workflows:
+      - Docker Base Image CI
+    types:
+      - completed
 
 env:
   GITHUB_PKG_REPO: "docker.pkg.github.com"
@@ -58,7 +61,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker pull docker.pkg.github.com/y-kimura-opst/grav-sample/base:main
+          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}:main-base
           docker build . --tag "${IMAGE_IDENTITY}"
 
       - name: Test the Docker image
@@ -91,4 +94,5 @@ jobs:
 
       - name: Push Github Package
         run: |
+          echo "docker push ${IMAGE_IDENTITY}"
           docker push "${IMAGE_IDENTITY}"
