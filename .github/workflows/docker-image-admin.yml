@@ -13,6 +13,7 @@ on:
     - 'grav/user/**'
     - 'Dockerfile.admin'
     - '.hadolint'
+    - '.github/workflows/**'
   workflow_run:
     workflows:
       - Docker Base Image CI
@@ -59,7 +60,7 @@ jobs:
             hadolint/hadolint < Dockerfile.admin
       - name: Build the Docker image
         run: |
-          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}:main-base
+          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}/base:main
           docker build . -f Dockerfile.admin --tag "${IMAGE_IDENTITY}"
       - name: Test the Docker image
         run: |

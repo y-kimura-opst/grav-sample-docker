@@ -15,6 +15,7 @@ on:
     - '!grav/user/**'
     - 'Dockerfile.base'
     - '.hadolint.yaml'
+    - '.github/workflows/**'
   schedule:
     - cron:  '0 12 * * *'
 
