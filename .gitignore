@@ -4,7 +4,10 @@
 # composer.lock
 grav/cache/
 grav/logs/
-grav/user/data/
+# grav/user/data/
+# grav/user/data/feed
+# grav/user/data/notifications
+# grav/user/data/scheduler
 grav/user/accounts/
 grav/user/plugins/admin/
 grav/user/plugins/email/
