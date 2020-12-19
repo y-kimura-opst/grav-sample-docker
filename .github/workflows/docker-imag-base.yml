@@ -20,7 +20,7 @@ on:
 
 env:
   GITHUB_PKG_REPO: "docker.pkg.github.com"
-  IMAGE_NAME: "${{ github.repository }}/base"
+  IMAGE_NAME: "${{ github.repository }}"
   DOCKER_BUILDKIT: "1"
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
             echo "PR以外の時はベースブランチ名がタグ名になります。"
             TAG_NAME=${GITHUB_REF##*/}
           fi
-          echo IMAGE_IDENTITY="${GITHUB_PKG_REPO}/${IMAGE_NAME}:${TAG_NAME}" >> $GITHUB_ENV
+          echo IMAGE_IDENTITY="${GITHUB_PKG_REPO}/${IMAGE_NAME}/base:${TAG_NAME}" >> $GITHUB_ENV
 
       - name: Get Environment
         run: |
