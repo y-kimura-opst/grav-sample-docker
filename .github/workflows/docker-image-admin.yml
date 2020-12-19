@@ -85,7 +85,7 @@ jobs:
       - name: Scan image
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-            -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 1 "${IMAGE_IDENTITY}"
+            -v ${HOME}/.cache:/root/.cache aquasec/trivy:latest --exit-code 0 "${IMAGE_IDENTITY}"
       
       - name: Inspect image
         run: |
