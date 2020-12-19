@@ -1,26 +1,27 @@
-name: Docker Base Image CI
+name: Docker Admin Image CI
 
 on:
   push:
     branches: [main]
     paths:
-    - 'grav/**'
-    - '!grav/user/**'
-    - 'Dockerfile.base'
-    - '.hadolint.yaml'
+    - 'grav/user/**'
+    - 'Dockerfile.admin'
+    - '.hadolint'
   pull_request:
     branches: [main]
     paths:
-    - 'grav/**'
-    - '!grav/user/**'
-    - 'Dockerfile.base'
-    - '.hadolint.yaml'
-  schedule:
-    - cron:  '0 12 * * *'
+    - 'grav/user/**'
+    - 'Dockerfile.admin'
+    - '.hadolint'
+  workflow_run:
+    workflows:
+      - Docker Base Image CI
+    types:
+      - completed
 
 env:
   GITHUB_PKG_REPO: "docker.pkg.github.com"
-  IMAGE_NAME: "${{ github.repository }}/base"
+  IMAGE_NAME: "${{ github.repository }}/admin"
   DOCKER_BUILDKIT: "1"
 
 jobs:
@@ -39,8 +40,7 @@ jobs:
             echo "PR以外の時はベースブランチ名がタグ名になります。"
             TAG_NAME=${GITHUB_REF##*/}
           fi
-          echo IMAGE_IDENTITY="${GITHUB_PKG_REPO}/${IMAGE_NAME}:${TAG_NAME}" >> $GITHUB_ENV
-
+          echo IMAGE_IDENTITY="${GITHUB_PKG_REPO}/${IMAGE_NAME}:${TAG_NAME}-admin" >> $GITHUB_ENV
       - name: Get Environment
         run: |
           env
@@ -52,23 +52,23 @@ jobs:
           GHP_USER: ${{ github.actor }}
           GHP_TOKEN: ${{ github.token }}
 
-      - name: Hadolint the Dockerfile.base
+      - name: Hadolint the Dockerfile
         run: |
           docker run --rm -i \
             -v $PWD/.hadolint.yaml:/root/.config/hadolint.yaml \
-            hadolint/hadolint < Dockerfile.base
-
+            hadolint/hadolint < Dockerfile.admin
       - name: Build the Docker image
         run: |
-          docker build . -f Dockerfile.base --tag "${IMAGE_IDENTITY}"
-
+          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}:main-base
+          docker build . -f Dockerfile.admin --tag "${IMAGE_IDENTITY}"
       - name: Test the Docker image
         run: |
           docker run --name test -d -p 9000:8080 "${IMAGE_IDENTITY}"
           sleep 3
           curl -LsS --retry 10 \
             --retry-delay 3 \
-              http://localhost:9000 \
+              http://localhost:9000 > log
+          cat log \
             | grep "GravCMS" \
             || FAIL=true
           docker stop test
@@ -76,9 +76,9 @@ jobs:
           if [ "$FAIL" = "true" ]
           then
             echo "container did not start correctly... something wrong..."
+            cat log
             exit 1
           fi
-
       - name: Scan image
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
@@ -87,7 +87,6 @@ jobs:
       - name: Inspect image
         run: |
           docker inspect "${IMAGE_IDENTITY}"
-
       - name: Push Github Package
         run: |
           echo "docker push ${IMAGE_IDENTITY}"
