@@ -7,12 +7,14 @@ on:
     - 'grav/user/**'
     - 'Dockerfile'
     - '.hadolint'
+    - '.github/workflows/**'
   pull_request:
     branches: [main]
     paths:
     - 'grav/user/**'
     - 'Dockerfile'
     - '.hadolint'
+    - '.github/workflows/**'
   workflow_dispatch:
   workflow_run:
     workflows:

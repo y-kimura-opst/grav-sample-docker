@@ -8,6 +8,7 @@ on:
     - '!grav/user/**'
     - 'Dockerfile.base'
     - '.hadolint.yaml'
+    - '.github/workflows/**'
   pull_request:
     branches: [main]
     paths:
