@@ -59,7 +59,7 @@ jobs:
           MAX_RETRY=30
           count=0
           SUCCESS=false
-          while [ $count -lt $MAX_RETRY ] || [ "$SUCCESS" == "false" ]
+          while [ $count -lt $MAX_RETRY ] && [ "$SUCCESS" == "false" ]
           do
             sleep 3
             curl --retry 50 -L --retry-delay 3 --head http://localhost:9000 \
