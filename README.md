@@ -1,7 +1,6 @@
 # grav-sample
 
-![Docker Image CI](https://github.com/y-kimura-opst/grav-sample/workflows/Docker%20Image%20CI/badge.svg)
-![Docker Base Image CI](https://github.com/y-kimura-opst/grav-sample/workflows/Docker%20Base%20Image%20CI/badge.svg)
+![Docker Build CI](https://github.com/y-kimura-opst/grav-sample/workflows/Docker%20Build%20CI/badge.svg)
 
 ## development & publishing
 
