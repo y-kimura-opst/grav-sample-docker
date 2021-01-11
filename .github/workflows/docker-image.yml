@@ -1,26 +1,13 @@
-name: Docker User Image CI
+name: Docker Base Image CI
 
 on:
   push:
     branches: [main]
-    paths:
-    - 'grav/user/**'
-    - 'Dockerfile'
-    - '.hadolint'
-    - '.github/workflows/**'
   pull_request:
     branches: [main]
-    paths:
-    - 'grav/user/**'
-    - 'Dockerfile'
-    - '.hadolint'
-    - '.github/workflows/**'
+  schedule:
+    - cron:  '0 12 * * *'
   workflow_dispatch:
-  workflow_run:
-    workflows:
-      - Docker Base Image CI
-    types:
-      - completed
 
 env:
   GITHUB_PKG_REPO: "docker.pkg.github.com"
@@ -56,16 +43,15 @@ jobs:
           GHP_USER: ${{ github.actor }}
           GHP_TOKEN: ${{ github.token }}
 
-      - name: Hadolint the Dockerfile
+      - name: Hadolint the Dockerfile.base
         run: |
           docker run --rm -i \
             -v $PWD/.hadolint.yaml:/root/.config/hadolint.yaml \
-            hadolint/hadolint < Dockerfile
+            hadolint/hadolint < Dockerfile.base
 
       - name: Build the Docker image
         run: |
-          docker pull ${GITHUB_PKG_REPO}/${IMAGE_NAME}/base:main
-          docker build . --tag "${IMAGE_IDENTITY}"
+          docker build . -f Dockerfile.base --tag "${IMAGE_IDENTITY}"
 
       - name: Test the Docker image
         run: |
@@ -73,8 +59,7 @@ jobs:
           sleep 3
           curl -LsS --retry 10 \
             --retry-delay 3 \
-              http://localhost:9000 > log
-          cat log \
+              http://localhost:9000 \
             | grep "GravCMS" \
             || FAIL=true
           docker stop test
@@ -82,7 +67,6 @@ jobs:
           if [ "$FAIL" = "true" ]
           then
             echo "container did not start correctly... something wrong..."
-            cat log
             exit 1
           fi
 

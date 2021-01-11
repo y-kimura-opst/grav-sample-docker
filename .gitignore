@@ -12,3 +12,4 @@ grav/user/plugins/admin/
 grav/user/plugins/email/
 grav/user/plugins/form/
 grav/user/plugins/login/
+grav/user/plugins/git-sync/
