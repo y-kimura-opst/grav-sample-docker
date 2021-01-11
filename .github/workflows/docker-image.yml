@@ -43,24 +43,24 @@ jobs:
           GHP_USER: ${{ github.actor }}
           GHP_TOKEN: ${{ github.token }}
 
-      - name: Hadolint the Dockerfile.base
+      - name: Hadolint the Dockerfile
         run: |
           docker run --rm -i \
             -v $PWD/.hadolint.yaml:/root/.config/hadolint.yaml \
-            hadolint/hadolint < Dockerfile.base
+            hadolint/hadolint < Dockerfile
 
       - name: Build the Docker image
         run: |
-          docker build . -f Dockerfile.base --tag "${IMAGE_IDENTITY}"
+          docker build . -f Dockerfile --tag "${IMAGE_IDENTITY}"
 
       - name: Test the Docker image
         run: |
-          docker run --name test -d -p 9000:8080 "${IMAGE_IDENTITY}"
+          docker run --name test -d -p 9000:8080 -v $PWD/sync:/sync "${IMAGE_IDENTITY}"
           sleep 3
           curl -LsS --retry 10 \
             --retry-delay 3 \
               http://localhost:9000 \
-            | grep "GravCMS" \
+            | grep "Grav" \
             || FAIL=true
           docker stop test
           docker rm test
