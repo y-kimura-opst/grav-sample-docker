@@ -14,4 +14,5 @@ fi
 mv user /sync/user
 ln -s /sync/user user
 
+echo "[INFO] grav container is ready..."
 php -S 0.0.0.0:8080 system/router.php

@@ -1,7 +1,7 @@
 FROM php:7.4-cli-alpine
 
 RUN apk upgrade --no-cache \
- && apk add --no-cache libzip-dev libpng-dev \
+ && apk add --no-cache libzip-dev libpng-dev git \
  && docker-php-ext-install zip gd
 
 COPY grav /var/www/grav
