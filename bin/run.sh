@@ -15,7 +15,7 @@ fi
 if [ ! -L "$PWD/user" ]
 then
   echo "/sync/userにうつす"
-  mv user /sync/
+  mv user /sync
   ln -s /sync/user user
 fi
 

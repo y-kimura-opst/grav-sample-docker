@@ -13,7 +13,13 @@ then
   exit 1
 fi
 
-ln -s /sync/user user
+if [ ! -L "$PWD/user" ]
+then
+  echo "/sync/userにうつす"
+  rm -fR user
+  ln -s /sync/user user
+fi
+
 echo ""
 echo ""
 echo "---"
