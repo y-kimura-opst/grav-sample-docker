@@ -57,13 +57,14 @@ jobs:
         run: |
           docker run --name test -d -p 9000:8080 -v $PWD/sync:/sync "${IMAGE_IDENTITY}"
           MAX_RETRY=30
-          n=0
+          count=0
           SUCCESS=false
-          until [ $n -ge $MAX_RETRY || "$SUCCESS" ]
+          while [ $count -lt $MAX_RETRY ] || [ "$SUCCESS" == "false" ]
           do
             sleep 3
             curl --retry 50 -L --retry-delay 3 --head http://localhost:9000 \
               | grep "HTTP/1.1 200 OK" && SUCCESS=true
+            count=$((++count))
           done
           docker stop test
           docker rm test

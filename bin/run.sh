@@ -11,8 +11,13 @@ then
   echo "[ERROR] /sync ディレクトリをマウントしてください。"
   exit 1
 fi
-mv user /sync/user
-ln -s /sync/user user
+
+if [ ! -L "$PWD/user" ]
+then
+  echo "/sync/userにうつす"
+  mv user /sync/user
+  ln -s /sync/user user
+fi
 
 echo "[INFO] grav container is ready..."
 php -S 0.0.0.0:8080 system/router.php

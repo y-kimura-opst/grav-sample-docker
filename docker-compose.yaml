@@ -1,0 +1,22 @@
+version: "3"
+services:
+  backend:
+    # image: docker.pkg.github.com/y-kimura-opst/grav-sample/admin:main
+    image: grav:latest
+    volumes:
+      - ./grav/user:/sync/user
+    networks:
+      - "common"
+  frontend:
+    image: nginx:latest
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html:/usr/share/nginx/html
+    restart: always
+    ports: ["80:80"]
+    depends_on: ["backend"]
+    networks:
+      - "common"
+networks:
+  common:
+    driver: bridge

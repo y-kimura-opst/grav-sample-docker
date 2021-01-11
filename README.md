@@ -22,3 +22,7 @@
 ### Add Other Theme Site
 
 - put grav-skelton-dir on grav/user/site/<site-name> 
+
+### TroubleShooting
+
+- Composerが動かなくなった。⏩vendorディレクトリを削除して実行。
