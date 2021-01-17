@@ -14,3 +14,4 @@ grav/user/plugins/form/
 grav/user/plugins/login/
 grav/user/plugins/git-sync/
 grav/_user
+manifest/secret.yaml
