@@ -7,16 +7,18 @@
 # mountPoint: /sync/
 # -------------------
 
-if [ -d "/sync" ]
+SYNC_DIR=/sync/user
+if [ -d "$SYNC_DIR" ]
 then
-  echo "[ERROR] /sync ディレクトリをマウントしてください。"
+  echo "[ERROR] $SYNC_DIR ディレクトリをマウントしてください。"
   exit 1
 fi
 
-SYNC_DIR=/sync/user
+
 if [ ! "$(ls $SYNC_DIR 2> /dev/null )" ]
 then
   echo "同期対象がありません。"
+  exit 0
 fi
 
 rm -fR user/*
