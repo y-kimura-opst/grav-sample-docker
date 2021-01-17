@@ -55,7 +55,7 @@ jobs:
 
       - name: Test the Docker image
         run: |
-          docker run --name test -d -p 9000:8080 -v $PWD/sync:/sync "${IMAGE_IDENTITY}"
+          docker run --name test -d -p 9000:8080 -v $PWD/.grav/user:/sync/user "${IMAGE_IDENTITY}"
           MAX_RETRY=30
           count=0
           SUCCESS=false
