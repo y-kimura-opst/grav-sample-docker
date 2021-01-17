@@ -26,7 +26,7 @@ spec:
         volumeMounts:
         - name: grav-sync
           mountPath: "/sync/user"
-          readOnly: true
+          readOnly: false
       volumes:
         - name: grav-sync
           persistentVolumeClaim:
