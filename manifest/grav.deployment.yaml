@@ -25,7 +25,7 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: grav-sync
-          mountPath: "/var/www/grav/user"
+          mountPath: "/sync/user"
           readOnly: true
       volumes:
         - name: grav-sync
