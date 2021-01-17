@@ -34,6 +34,7 @@ data:
 
         ## Begin - upstream
         location / {
+            ## <service名>.<namespace名>で名前解決される。
             proxy_pass    http://grav.grav:8080/;
             proxy_read_timeout 300;
         }
