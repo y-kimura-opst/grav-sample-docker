@@ -55,18 +55,23 @@ jobs:
 
       - name: Test the Docker image
         run: |
-          docker run --name test -d -p 9000:8080 -v $PWD/.sync:/sync/user "${IMAGE_IDENTITY}"
-          MAX_RETRY=30
-          count=0
-          SUCCESS=false
-          while [ $count -lt $MAX_RETRY ] && [ "$SUCCESS" == "false" ]
-          do
-            cat test || echo ""
-            sleep 3
-            curl --retry 50 -L --retry-delay 3 --head http://localhost:9000 > test
-            cat test | grep "HTTP/1.1 200 OK" && SUCCESS=true
-            count=$((++count))
-          done
+          echo "mount test: non-existing directory..."
+          docker run --name test -d -p 9000:8080 -v $PWD/_user:/sync/user "${IMAGE_IDENTITY}"
+          curl --retry 10 -L --retry-delay 3 --head http://localhost:9000 | grep "HTTP/1.1 200 OK" && SUCCESS=true
+          docker stop test
+          docker rm test
+          if [ "$SUCCESS" != "true" ]
+          then
+            echo "failed: ${@}" >&2
+            docker logs "${IMAGE_IDENTITY}"
+            exit 1
+          fi
+
+      - name: Test the Docker image
+        run: |
+          echo "mount test: existing directory..."
+          docker run --name test -d -p 9000:8080 -v $PWD/grav/user:/sync/user "${IMAGE_IDENTITY}"
+          curl --retry 10 -L --retry-delay 3 --head http://localhost:9000 | grep "HTTP/1.1 200 OK" && SUCCESS=true
           docker stop test
           docker rm test
           if [ "$SUCCESS" != "true" ]
