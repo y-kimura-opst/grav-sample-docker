@@ -3,20 +3,22 @@
 # Gitと同期するためには定期的にsyncコマンドを実行する必要がある。
 # コンテナ起動時にディレクトリをマウントし、crontab実行用のコンテナと同期できるようにする。
 # -------------------
-# mountPoint: /sync/
-# -------------------
 
-if [ ! -d "/sync" ]
+SYNC_DIR=/sync/user
+
+if [ ! -d "$SYNC_DIR" ]
 then
-  echo "[ERROR] /sync ディレクトリをマウントしてください。"
+  echo "[ERROR] $SYNC_DIR ディレクトリをマウントしてください。"
   exit 1
 fi
 
-if [ ! -L "$PWD/user" ]
+
+if [ ! "$(ls $SYNC_DIR/ 2> /dev/null )" ]
 then
-  echo "/sync/userにうつす"
-  mv user /sync
-  ln -s /sync/user user
+  echo "$SYNC_DIRにうつす"
+  mv user/* $SYNC_DIR
+  rm -fR user
+  ln -s $SYNC_DIR user
 fi
 
 echo "[INFO] grav container is ready..."

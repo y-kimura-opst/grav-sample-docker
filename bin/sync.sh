@@ -13,12 +13,14 @@ then
   exit 1
 fi
 
-if [ ! -L "$PWD/user" ]
+SYNC_DIR=/sync/user
+if [ ! "$(ls $SYNC_DIR 2> /dev/null )" ]
 then
-  echo "/sync/userにうつす"
-  rm -fR user
-  ln -s /sync/user user
+  echo "同期対象がありません。"
 fi
+
+rm -fR user/*
+mv $SYNC_DIR/* user
 
 echo ""
 echo ""
