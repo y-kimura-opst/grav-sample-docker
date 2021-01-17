@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grav
+  namespace: grav
+  labels:
+    app: grav
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grav
+  template:
+    metadata:
+      labels:
+        app: grav
+    spec:
+      imagePullSecrets:
+      - name: github-registry
+      containers:
+      - name: grav
+        image: docker.pkg.github.com/y-kimura-opst/grav-sample/grav:gitsyncplugin
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: grav-sync
+          mountPath: "/var/www/grav/user"
+          readOnly: true
+      volumes:
+        - name: grav-sync
+          persistentVolumeClaim:
+            claimName : grav-sync

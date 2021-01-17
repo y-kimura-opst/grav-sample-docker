@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grav-sync
+  namespace: grav
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  volumeName: grav-sync
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 1Gi
+    limits:
+      storage: 2Gi
