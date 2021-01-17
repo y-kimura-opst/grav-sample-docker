@@ -61,9 +61,10 @@ jobs:
           SUCCESS=false
           while [ $count -lt $MAX_RETRY ] && [ "$SUCCESS" == "false" ]
           do
+            cat test
             sleep 3
-            curl --retry 50 -L --retry-delay 3 --head http://localhost:9000 \
-              | grep "HTTP/1.1 200 OK" && SUCCESS=true
+            curl --retry 50 -L --retry-delay 3 --head http://localhost:9000 > test
+            cat test | grep "HTTP/1.1 200 OK" && SUCCESS=true
             count=$((++count))
           done
           docker stop test
