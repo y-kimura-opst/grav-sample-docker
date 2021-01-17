@@ -3,20 +3,11 @@ kind: PersistentVolume
 metadata:
   name: grav-sync
 spec:
-  capacity:
-    storage: 10Gi
+  capacity: 
+    storage: 5Gi
   volumeMode: Filesystem
   accessModes:
   - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
-  local:
-    path: /run/desktop/mnt/host/c/Users/Owner/Documents/work/git/grav-sample/grav/user
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - docker-desktop
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+    path: /tmp/hostpath_pv/grav

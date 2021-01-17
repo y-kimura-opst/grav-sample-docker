@@ -8,7 +8,7 @@ spec:
     - ReadWriteMany
   volumeMode: Filesystem
   volumeName: grav-sync
-  storageClassName: local-storage
+  storageClassName: ""
   resources:
     requests:
       storage: 1Gi

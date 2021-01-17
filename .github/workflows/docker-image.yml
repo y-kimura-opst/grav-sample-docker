@@ -205,5 +205,15 @@ jobs:
           minikube version: 'v1.16.0'
           kubernetes version: 'v1.19.2'
           github token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Interact with the cluster
-        run: kubectl get nodes
+
+      - name: setup namespace & registry token
+        run: |
+          kubectl create namespace grav
+          kubectl create secret docker-registry github-registry \
+            --docker-server=docker.pkg.github.com \
+            --docker-username=$GHP_USER --docker-password=$GHP_TOKEN \
+            --docker-email=email-address@address \
+            -n grav
+      - name: Apply test
+        run: |
+          kubectl apply -f manifest
