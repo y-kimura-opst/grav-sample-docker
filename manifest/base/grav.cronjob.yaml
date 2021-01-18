@@ -1,0 +1,36 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: grav-gitsync
+  namespace: grav
+spec:
+  schedule: "0 0 0 0 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: github-registry
+          initContainers:
+          - name: chown
+            image: busybox
+            imagePullPolicy: Always
+            command: ["sh", "-c", "chown -R 101:82 /sync/user"]
+            volumeMounts:
+            - name: grav-sync
+              mountPath: "/sync/user"
+              readOnly: false
+          containers:
+          - name: sync
+            image: docker.pkg.github.com/y-kimura-opst/grav-sample/grav:gitsyncplugin
+            imagePullPolicy: Always
+            command: [ "/var/www/grav/bin/sync.sh" ]
+            volumeMounts:
+            - name: grav-sync
+              mountPath: "/sync/user"
+              readOnly: false
+          volumes:
+            - name: grav-sync
+              persistentVolumeClaim:
+                claimName : grav-sync
+          restartPolicy: OnFailure
