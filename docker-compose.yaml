@@ -1,9 +1,11 @@
 version: "3"
 services:
   backend:
-    image: docker.pkg.github.com/y-kimura-opst/grav-sample/admin:main
-    volumes:
-      - ./grav/user:/var/www/grav/_user
+    # image: 51616253c30b
+    build:
+      context: .
+    volumes_from:
+      - sync
     networks:
       - "common"
   frontend:
@@ -19,3 +21,9 @@ services:
 networks:
   common:
     driver: bridge
+volumes:
+  grav_sync:
+    driver_opts:
+      type: none
+      device: grav/user
+      o: bind
