@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grav-gitsync
+  namespace: grav
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        job: grav-sync
+    spec:
+      containers:
+      - command:
+        - /var/www/grav/bin/sync.sh
+        image: docker.pkg.github.com/y-kimura-opst/grav-sample/grav:gitsyncplugin
+        imagePullPolicy: IfNotPresent
+        name: sync
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /sync/user
+          name: grav-sync
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: github-registry
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - chown -R 101:82 /sync/user
+        image: busybox
+        imagePullPolicy: Always
+        name: chown
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /sync/user
+          name: grav-sync
+      restartPolicy: OnFailure
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: grav-sync
+        persistentVolumeClaim:
+          claimName: grav-sync
