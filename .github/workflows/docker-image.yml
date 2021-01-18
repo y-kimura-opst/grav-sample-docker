@@ -214,6 +214,19 @@ jobs:
             --docker-username=$GHP_USER --docker-password=$GHP_TOKEN \
             --docker-email=email-address@address \
             -n grav
+      
+      - name: kustomize install
+        run: |
+          curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.9.2/kustomize_v3.9.2_linux_amd64.tar.gz -O
+          tar xvfz kustomize_v3.9.2_linux_amd64.tar.gz
+          ./kustomize version
+      
+      - name: kustomize install
+        run: |
+          ./kustomize build manifest/overlays/local > manifest.local.yaml
+          ./kustomize build manifest/overlays/minikube > manifest.minikube.yaml 
+          ./kustomize build manifest/overlays/production > manifest.production.yaml
+
       - name: Apply test
         run: |
-          kubectl apply -f manifest
+          kubectl apply -f manifest.minikube.yaml
