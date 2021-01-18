@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
 - ../../base
 # create from template.secret.yaml
-- secret.yaml
+- template.secret.yaml
 patches:
 - pv.yaml
