@@ -19,9 +19,9 @@ RUN mv php.ini "$PHP_INI_DIR/php.ini" \
 
 USER grav
 
-RUN php bin/composer.phar install --no-dev -o 
-RUN rm -fR /home/grav/.composer 
-RUN bin/gpm install -y admin git-sync
+RUN php bin/composer.phar install --no-dev -o \ 
+ && rm -fR /home/grav/.composer \
+ && bin/gpm install -y admin git-sync
 
 EXPOSE 8080
 CMD [ "/var/www/grav/bin/run.sh" ]
