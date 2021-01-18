@@ -22,7 +22,7 @@ then
 fi
 
 rm -fR user/*
-mv $SYNC_DIR/* user
+cp $SYNC_DIR/* user
 
 echo ""
 echo ""
