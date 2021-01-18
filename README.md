@@ -37,6 +37,13 @@ stringData:
 
 - put grav-skelton-dir on grav/user/site/<site-name> 
 
+### crontab運用メモ
+
+```
+grav get pod | grep grav-gitsync | awk '{print $1}' | xargs kubectl -n grav delete pod
+grav get job | grep grav-gitsync | awk '{print $1}' | xargs kubectl -n grav delete job
+```
+
 ### TroubleShooting
 
 - Composerが動かなくなった。⏩vendorディレクトリを削除して実行。

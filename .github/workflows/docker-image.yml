@@ -221,7 +221,7 @@ jobs:
           tar xvfz kustomize_v3.9.2_linux_amd64.tar.gz
           ./kustomize version
       
-      - name: kustomize install
+      - name: kustomize build test
         run: |
           ./kustomize build manifest/overlays/local > manifest.local.yaml
           ./kustomize build manifest/overlays/minikube > manifest.minikube.yaml 
