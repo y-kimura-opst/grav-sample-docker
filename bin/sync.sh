@@ -8,7 +8,7 @@
 # -------------------
 
 SYNC_DIR=/sync/user
-if [ -d "$SYNC_DIR" ]
+if [ ! -d "$SYNC_DIR" ]
 then
   echo "[ERROR] $SYNC_DIR ディレクトリをマウントしてください。"
   exit 1
