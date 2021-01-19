@@ -22,7 +22,7 @@ spec:
               readOnly: false
           containers:
           - name: sync
-            image: docker.pkg.github.com/y-kimura-opst/grav-sample/grav:gitsyncplugin
+            image: docker.pkg.github.com/y-kimura-opst/grav-sample-docker/grav:gitsyncplugin
             imagePullPolicy: Always
             command: [ "/var/www/grav/bin/sync.sh" ]
             volumeMounts:

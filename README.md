@@ -1,6 +1,6 @@
-# grav-sample
+# grav-sample-docker
 
-![Docker Build CI](https://github.com/y-kimura-opst/grav-sample/workflows/Docker%20Build%20CI/badge.svg)
+![Docker Build CI](https://github.com/y-kimura-opst/grav-sample-docker/workflows/Docker%20Build%20CI/badge.svg)
 
 ## setup repository
 

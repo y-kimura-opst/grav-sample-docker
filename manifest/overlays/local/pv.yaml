@@ -10,4 +10,4 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Delete
   hostPath:
-    path: /run/desktop/mnt/host/c/Users/Owner/Documents/work/git/grav-sample
+    path: /run/desktop/mnt/host/c/Users/Owner/Documents/work/git/grav-sample-docker/grav/user

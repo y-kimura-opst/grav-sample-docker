@@ -27,7 +27,7 @@ spec:
           readOnly: false
       containers:
       - name: grav
-        image: docker.pkg.github.com/y-kimura-opst/grav-sample/grav:main
+        image: docker.pkg.github.com/y-kimura-opst/grav-sample-docker/grav:main
         imagePullPolicy: Always
         ports:
         - containerPort: 80
