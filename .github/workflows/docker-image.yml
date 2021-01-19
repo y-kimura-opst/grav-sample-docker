@@ -41,6 +41,8 @@ jobs:
     needs: env
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       - uses: actions/cache@v2
         with:
           path: out.tar
