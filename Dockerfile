@@ -5,14 +5,12 @@ RUN apk upgrade --no-cache \
  && docker-php-ext-install zip gd
 
 COPY grav /var/www/grav
-COPY bin /var/www/grav/bin
+COPY files/bin /var/www/grav/bin
+COPY files/php/php.ini /usr/local/etc/php/php.ini
 WORKDIR /var/www/grav
 
-RUN ls -l
-
-RUN mv php.ini "$PHP_INI_DIR/php.ini" \
- && adduser -S -G www-data grav \
- && chown -R grav:www-data /var/www/grav "$PHP_INI_DIR/php.ini" \
+RUN adduser -S -G www-data grav \
+ && chown -R grav:www-data /var/www/grav /usr/local/etc/php/php.ini \
  && find /var/www/grav -type d -exec chmod 755 {} + \
  && find /var/www/grav -type f -exec chmod 664 {} + \
  && chmod +x /var/www/grav/bin/*
