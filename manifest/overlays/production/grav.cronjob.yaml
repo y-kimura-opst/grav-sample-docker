@@ -4,4 +4,4 @@ metadata:
   name: grav-gitsync
   namespace: grav
 spec:
-  schedule: "* * * * *"
+  schedule: "0 0 0 0 0"

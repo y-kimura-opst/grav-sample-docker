@@ -8,7 +8,7 @@ spec:
     - ReadWriteMany
   volumeMode: Filesystem
   volumeName: grav-sync
-  storageClassName: "change to production storageclass"
+  # storageClassName: "use default storage class"
   resources:
     requests:
       storage: 1Gi

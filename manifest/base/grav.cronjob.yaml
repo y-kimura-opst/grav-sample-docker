@@ -33,4 +33,4 @@ spec:
             - name: grav-sync
               persistentVolumeClaim:
                 claimName : grav-sync
-          restartPolicy: OnFailure
+          restartPolicy: Never
