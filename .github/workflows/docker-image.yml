@@ -89,9 +89,9 @@ jobs:
           SUCCESS: "false"
         run: |
           echo "mount test: non-existing directory..."
-          mkdir _user
-          sudo chown 101:82 _user
-          docker run --name test -d -p 9000:8080 -v $PWD/_user:/sync/user "${{needs.env.outputs.IMAGE_IDENTITY}}"
+          mkdir /tmp/_user
+          sudo chown 101:82 /tmp/_user
+          docker run --name test -d -p 9000:8080 -v /tmp/_user:/sync/user "${{needs.env.outputs.IMAGE_IDENTITY}}"
 
           while [ $count -lt $MAX_RETRY ]
           do

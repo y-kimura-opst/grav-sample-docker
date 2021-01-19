@@ -8,7 +8,7 @@ COPY grav /var/www/grav
 COPY bin /var/www/grav/bin
 WORKDIR /var/www/grav
 
-RUN find /var/www/grav -type f -name run.sh
+RUN ls -l
 
 RUN mv php.ini "$PHP_INI_DIR/php.ini" \
  && adduser -S -G www-data grav \
