@@ -2,6 +2,12 @@
 
 ![Docker Build CI](https://github.com/y-kimura-opst/grav-sample/workflows/Docker%20Build%20CI/badge.svg)
 
+## setup repository
+
+```
+git submodule add https://github.com/y-kimura-opst/grav-sample.git grav
+```
+
 ## kubernetesにデプロイする
 
 1. `kubectl create namespace grav`コマンドを実行し、namespaceを作成します。

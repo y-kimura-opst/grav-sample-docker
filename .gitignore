@@ -2,16 +2,5 @@
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 # composer.lock
-grav/cache/
-grav/logs/
-grav/user/data/feed
-grav/user/data/notifications
-grav/user/data/scheduler
-grav/user/accounts/
-grav/user/plugins/admin/
-grav/user/plugins/email/
-grav/user/plugins/form/
-grav/user/plugins/login/
-grav/user/plugins/git-sync/
-grav/_user
+
 **/secret.yaml
