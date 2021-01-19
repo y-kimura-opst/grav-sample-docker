@@ -109,6 +109,8 @@ jobs:
     - build
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - uses: actions/download-artifact@v2
         with:
           name: docker
