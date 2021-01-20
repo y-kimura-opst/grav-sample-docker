@@ -19,7 +19,8 @@ then
   mv user/* $SYNC_DIR
   if [ "$STG_PLUGIN_INSTALL" == "true" ]
   then
-    sh user/plugins/production.sh
+    echo "検証環境用プラグイン"
+    sh user/plugins/staging.sh
   fi
 fi
 rm -fR user
