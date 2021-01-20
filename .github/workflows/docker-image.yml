@@ -249,8 +249,9 @@ jobs:
           kubernetes version: 'v1.19.2'
           github token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: setup namespace & registry token
+      - name: setup namespace & registry token & ingress-controller
         run: |
+          minikube addons enable ingress
           kubectl create namespace grav
           kubectl create secret docker-registry github-registry \
             --docker-server=docker.pkg.github.com \
