@@ -17,9 +17,15 @@ if [ ! "$(ls $SYNC_DIR/ 2> /dev/null )" ]
 then
   echo "$SYNC_DIRにうつす"
   mv user/* $SYNC_DIR
+  if [ "$STG_PLUGIN_INSTALL" == "true" ]
+  then
+    sh user/plugins/production.sh
+  fi
 fi
 rm -fR user
 ln -s $SYNC_DIR user
+
+
 
 echo "[INFO] grav container is ready..."
 php -S 0.0.0.0:8080 system/router.php

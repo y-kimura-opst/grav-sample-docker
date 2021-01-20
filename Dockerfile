@@ -9,6 +9,7 @@ COPY files/bin /var/www/grav/bin
 COPY files/php/php.ini /usr/local/etc/php/php.ini
 WORKDIR /var/www/grav
 ENV HOME /var/www/grav
+ENV STG_PLUGIN_INSTALL false
 
 RUN adduser -S -G www-data grav \
  && chown -R grav:www-data /var/www/grav /usr/local/etc/php/php.ini \
@@ -20,7 +21,7 @@ USER grav
 
 RUN php bin/composer.phar install --no-dev -o \ 
  && rm -fR /home/grav/.composer \
- && bin/gpm install -y admin git-sync
+ && sh user/plugins/production.sh
 
 EXPOSE 8080
 CMD [ "/var/www/grav/bin/run.sh" ]
