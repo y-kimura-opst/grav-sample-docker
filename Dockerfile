@@ -8,6 +8,7 @@ COPY grav /var/www/grav
 COPY files/bin /var/www/grav/bin
 COPY files/php/php.ini /usr/local/etc/php/php.ini
 WORKDIR /var/www/grav
+ENV HOME /var/www/grav
 
 RUN adduser -S -G www-data grav \
  && chown -R grav:www-data /var/www/grav /usr/local/etc/php/php.ini \
