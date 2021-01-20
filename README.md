@@ -14,10 +14,10 @@ git submodule add https://github.com/y-kimura-opst/grav-sample.git grav
 2. レジストリにアクセスする`docker-registry`シークレットを作成します。
 ```
 kubectl create secret docker-registry github-registry \
--n grav
---docker-server=docker.pkg.github.com \
---docker-username=`github-username` \
---docker-password=`github-access-token` \
+-n grav \
+--docker-server="docker.pkg.github.com" \
+--docker-username="github-username" \
+--docker-password="github-access-token" \
 --docker-email=aaa@example.com
 ```
 3. `kustomize build manifest/override/(local or production) | kubectl apply -f -`コマンドを実行し、kubernetesにデプロイします。
