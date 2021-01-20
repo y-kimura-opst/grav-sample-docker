@@ -8,15 +8,12 @@
 # -------------------
 
 SYNC_DIR=/sync/user
-if [ ! -d "$SYNC_DIR" ]
-then
+if [ ! -d "$SYNC_DIR" ]; then
   echo "[ERROR] $SYNC_DIR ディレクトリをマウントしてください。"
   exit 1
 fi
 
-
-if [ ! "$(ls $SYNC_DIR 2> /dev/null )" ]
-then
+if [ ! "$(ls $SYNC_DIR 2>/dev/null)" ]; then
   echo "同期対象がありません。"
   exit 0
 fi

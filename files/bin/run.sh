@@ -6,27 +6,23 @@
 
 SYNC_DIR=/sync/user
 
-if [ ! -d "$SYNC_DIR" ]
-then
+if [ ! -d "$SYNC_DIR" ]; then
   echo "[ERROR] $SYNC_DIR ディレクトリをマウントしてください。"
   exit 1
 fi
 
-
-if [ ! "$(ls $SYNC_DIR/ 2> /dev/null )" ]
-then
+if [ ! "$(ls $SYNC_DIR/ 2>/dev/null)" ]; then
   echo "$SYNC_DIRにうつす"
   mv user/* $SYNC_DIR
-  if [ "$STG_PLUGIN_INSTALL" == "true" ]
-  then
-    echo "検証環境用プラグイン"
-    sh user/plugins/staging.sh
-  fi
 fi
+
 rm -fR user
 ln -s $SYNC_DIR user
 
-
+if [ "$STG_PLUGIN_INSTALL" == "true" ]; then
+  echo "検証環境用プラグイン"
+  sh user/plugins/staging.sh
+fi
 
 echo "[INFO] grav container is ready..."
 php -S 0.0.0.0:8080 system/router.php
