@@ -69,7 +69,7 @@ jobs:
       - name: Hadolint the Dockerfile
         run: docker run --rm -i -v $PWD/.hadolint.yaml:/root/.config/hadolint.yaml hadolint/hadolint < Dockerfile
 
-  test-non-existing-directory:
+  test1:non-existing-directory:
     runs-on: ubuntu-latest
     needs: 
     - env
@@ -102,7 +102,7 @@ jobs:
           done
           exit 1
 
-  test-mount-existing-dir:
+  test2:mount-existing-dir:
     runs-on: ubuntu-latest
     needs: 
     - env
@@ -137,15 +137,13 @@ jobs:
           done
           exit 1
 
-  test-dev-plugin-install:
+  test3:dev-plugin-install:
     runs-on: ubuntu-latest
     needs: 
     - env
     - build
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: recursive
       - uses: actions/download-artifact@v2
         with:
           name: docker
@@ -159,8 +157,10 @@ jobs:
           count: "0"
           SUCCESS: "false"
         run: |
-          echo "mount test: existing directory..."
-          docker run --name test -e STG_PLUGIN_INSTALL=true -d -p 9000:8080 -v $PWD/grav/user:/sync/user "${{needs.env.outputs.IMAGE_IDENTITY}}"
+          echo "mount test: non-existing directory..."
+          mkdir /tmp/_user
+          sudo chown 101:82 /tmp/_user
+          docker run --name test -e STG_PLUGIN_INSTALL=true -d -p 9000:8080 -v /tmp/_user:/sync/user "${{needs.env.outputs.IMAGE_IDENTITY}}"
 
           while [ $count -lt $MAX_RETRY ]
           do
