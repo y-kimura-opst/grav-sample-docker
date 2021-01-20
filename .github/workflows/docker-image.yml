@@ -111,7 +111,7 @@ jobs:
           echo "二回目起動をテストします。"
           ls /tmp/_user
           sudo chown 101:82 /tmp/_user
-          docker stop test & docker rm test
+          docker stop test && docker rm test
           docker run --name test -d -p 9000:8080 -v /tmp/_user:/sync/user "${{needs.env.outputs.IMAGE_IDENTITY}}"
 
           while [ $count -lt $MAX_RETRY ]
@@ -165,7 +165,7 @@ jobs:
           echo "2回目のデプロイ"
           ls /tmp/_user
           sudo chown 101:82 /tmp/_user
-          docker stop test & docker rm test
+          docker stop test && docker rm test
           docker run --name test -e STG_PLUGIN_INSTALL=true -d -p 9000:8080 -v /tmp/_user:/sync/user "${{needs.env.outputs.IMAGE_IDENTITY}}"
           while [ $count -lt $MAX_RETRY ]
           do
