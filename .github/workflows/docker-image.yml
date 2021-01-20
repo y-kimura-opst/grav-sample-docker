@@ -69,7 +69,7 @@ jobs:
       - name: Hadolint the Dockerfile
         run: docker run --rm -i -v $PWD/.hadolint.yaml:/root/.config/hadolint.yaml hadolint/hadolint < Dockerfile
 
-  test1_non-existing-directory:
+  test1_mount-non-existing-dir:
     runs-on: ubuntu-latest
     needs: 
     - env
@@ -136,7 +136,7 @@ jobs:
           done
           exit 1
 
-  test3_dev-plugin-install:
+  test3_dev-plugin-install-non-existing-dir:
     runs-on: ubuntu-latest
     needs: 
     - env
