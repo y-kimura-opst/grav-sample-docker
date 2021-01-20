@@ -5,4 +5,3 @@ resources:
 - ingress.yaml
 patches:
 - pvc.yaml
-- grav.cronjob.yaml

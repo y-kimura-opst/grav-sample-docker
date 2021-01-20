@@ -1,7 +1,0 @@
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: grav-gitsync
-  namespace: grav
-spec:
-  schedule: "0 0 0 0 0"
